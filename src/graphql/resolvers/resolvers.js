@@ -51,9 +51,14 @@ export const resolvers = {
 			}
 		},
 
-		googleBook: (obj, { id }, { dataSources }) => {
-			const book = dataSources.googleBooks.getBook({ id });
-			return book;
+		googleBook: async (obj, { id }, { dataSources }) => {
+			try {
+				const book = await dataSources.googleBooks.getBook({ id });
+				return book;
+			} catch (error) {
+				console.error('>>>>>>>>>>>>> RESOLVERS > Query > googleBook > ERROR: ', error);
+				return false;
+			}
 		},
 
 		character: async (obj, { id }, { dataSources }) => {
@@ -68,7 +73,7 @@ export const resolvers = {
 
 		characters: async (obj, { page, filter }, { dataSources }) => {
 			try {
-        console.log('#################### RESOLVERS/characters ####################')
+				console.log('#################### RESOLVERS/characters ####################')
 				const characters = await dataSources.rickAndMorty.getCharacters({ page, filter });
 				return characters;
 			} catch (error) {
@@ -92,14 +97,14 @@ export const resolvers = {
 	// if mutation updates a single entity, AC automatically updates that value in cache when the mutation returns
 	Mutation: {
 		googleBookModifyFavorite: async (obj, { id, favorite }, { dataSources }) => {
-      console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > id: ', id);
-      console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > favorite: ', favorite);
+			console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > id: ', id);
+			console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > favorite: ', favorite);
 			try {
 				const book = await dataSources.googleBooks.getBook({ id });
-        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book: ', book);
-        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 favorite: ', favorite);
+				console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book: ', book);
+				console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 favorite: ', favorite);
 				book.favorite = favorite;
-        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book.favorite: ', book);
+				console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book.favorite: ', book);
 				return {
 					success: true,
 					message: 'added to favorites',

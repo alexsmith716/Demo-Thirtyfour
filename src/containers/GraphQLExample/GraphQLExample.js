@@ -17,9 +17,10 @@ const GraphQLExample = () => {
 	//	const [errorMessage, setErrorMessage] = useState(null);
 	const inputElement = useRef(null);
 	const [clientExtract, setClientExtract] = useState(null);
-	const [rickAndMortyCharactersInfo, setRickAndMortyCharactersInfo] = useState(null);
+	const [rickAndMortyCharactersInfo, setRickAndMortyCharactersInfo] = useState(false);
 	const [rickAndMortyCharactersFilterName, setRickAndMortyCharactersFilterName] = useState('');
 	const [rickAndMortyCharactersCurrentPage, setRickAndMortyCharactersCurrentPage] = useState(null);
+	const [rickAndMortyResults, setRickAndMortyResults] = useState(false);
 
 	const client = useApolloClient();
 
@@ -54,11 +55,9 @@ const GraphQLExample = () => {
 			}
 	);
 
-	//  const isSetVariables = networkStatus === 2;
-
+	//  const isSetVariables = netw
 	//  const characters = !isSetVariables ? rickAndMortyCharactersData?.characters : undefined;
 	//  const next = characters?.info?.next;
-
 	//  const hasNextPage = Boolean(next);
 	//  const results = characters?.results || [];
 
@@ -72,27 +71,30 @@ const GraphQLExample = () => {
 	//	=====================================================================
 
 	useEffect(() => {
-			if (previousData) {
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > previousData: ', previousData);
-			}
 			if (rickAndMortyCharactersData) {
 				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersData: ', rickAndMortyCharactersData);
 				const { characters: { info }} = rickAndMortyCharactersData;
-				setRickAndMortyCharactersInfo(info);
-				if (!info.prev && info.next) {
-					setRickAndMortyCharactersCurrentPage(1);
-				} else if (info.next && info.prev) {
-					setRickAndMortyCharactersCurrentPage(info.next - 1);
-				} else {
-					setRickAndMortyCharactersCurrentPage(info.pages);
+				const { characters: { results }} = rickAndMortyCharactersData;
+				if (info) {
+					setRickAndMortyCharactersInfo(info);
+					if (!info.prev && info.next) {
+						setRickAndMortyCharactersCurrentPage(1);
+					} else if (info.next && info.prev) {
+						setRickAndMortyCharactersCurrentPage(info.next - 1);
+					} else {
+						setRickAndMortyCharactersCurrentPage(info.pages);
+					}
+					console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersCurrentPage: ', rickAndMortyCharactersCurrentPage);
 				}
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersCurrentPage: ', rickAndMortyCharactersCurrentPage);
+				if (results.length > 0) {
+					setRickAndMortyResults(true);
+				}
 			}
 			if (rickAndMortyCharactersFilterName) {
 				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersFilterName: ', rickAndMortyCharactersFilterName);
 			}
 		},
-		[rickAndMortyCharactersData, rickAndMortyCharactersFilterName, previousData]
+		[rickAndMortyCharactersData, rickAndMortyCharactersFilterName,]
 	);
 
 	return (
@@ -125,31 +127,23 @@ const GraphQLExample = () => {
 							)}
 						</div>
 
-						{/* 
 						<div>
 							<div className="mb-3">
 								<h5>rickAndMortyCharactersData Data:</h5>
 							</div>
-							{results.map((character, index) => (
-								<div key={index} className="mb-3 container-padding-border-radius-2">
-									<RickAndMortyCharacter character={ character } />
+							{rickAndMortyCharactersData && rickAndMortyResults && (
+								<div>
+									{rickAndMortyCharactersData.characters.results.map((character, index) => (
+										<div key={index} className="mb-3 container-padding-border-radius-2">
+											<RickAndMortyCharacter character={ character } />
+										</div>
+									))}
 								</div>
-							))}
+							)}
+							{rickAndMortyCharactersData && !rickAndMortyResults && (
+								<div>No Data Found!</div>
+							)}
 						</div>
-						*/}
-
-						{rickAndMortyCharactersData && (
-							<div>
-								<div className="mb-3">
-									<h5>rickAndMortyCharactersData Data:</h5>
-								</div>
-								{rickAndMortyCharactersData.characters.results.map((character, index) => (
-									<div key={index} className="mb-3 container-padding-border-radius-2">
-										<RickAndMortyCharacter character={ character } />
-									</div>
-								))}
-							</div>
-						)}
 
 						{clientExtract && (
 							<div>

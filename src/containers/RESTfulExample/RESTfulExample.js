@@ -49,13 +49,12 @@ const RESTfulExample = () => {
 	useEffect(() => {
 			if (googleBooksData) {
 				console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBooksData: ', googleBooksData);
-				//console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBooksData.googleBooks.cursor: ', googleBooksData.googleBooks.cursor);
 			}
 			if (googleBookSearch) {
 				console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBookSearch: ', googleBookSearch);
 			}
 			if (googleBookData) {
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBookData.googleBook: ', googleBookData.googleBook);
+				console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBookData: ', googleBookData);
 			}
 		},
 		[googleBooksData, googleBookSearch, googleBookData]
@@ -112,26 +111,22 @@ const RESTfulExample = () => {
 								<div className="mb-3">
 									<h5>getGoogleBooks Data:</h5>
 								</div>
-								{/* ----------------------------------------------------------------------- */}
 								{googleBooksData.googleBooks.books.map((book, index) => (
 									<div key={index} className="mb-3 container-padding-border-radius-2">
 										<GoogleBookBook book={ book } />
 									</div>
 								))}
-								{/* ----------------------------------------------------------------------- */}
 							</div>
 						)}
 
-						{googleBookData && (
+						{googleBookData && googleBookData.googleBook && (
 							<div>
 								<div className="mb-3">
 									<h5>getGoogleBook Data:</h5>
 								</div>
-								{/* ----------------------------------------------------------------------- */}
 									<div key={googleBookData.googleBook.id} className="mb-3 container-padding-border-radius-2">
 										<GoogleBookBook book={ googleBookData.googleBook } />
 									</div>
-								{/* ----------------------------------------------------------------------- */}
 							</div>
 						)}
 
@@ -154,14 +149,16 @@ const RESTfulExample = () => {
 						/>
 					</div>
 
-					<div className="mb-3">
-						<Button
-							type="button"
-							className="btn-success btn-md"
-							onClick={() => refetch()}
-							buttonText="RefetchQueryResults"
-						/>
-					</div>
+					{googleBooksData && (
+						<div className="mb-3">
+							<Button
+								type="button"
+								className="btn-success btn-md"
+								onClick={() => refetch()}
+								buttonText="RefetchQueryResults"
+							/>
+						</div>
+					)}
 
 					<div className="mb-3">
 						<Button
