@@ -38,7 +38,7 @@ export const typeDefs = gql`
 	type GoogleBooksUpdateResponse {
 		success: Boolean!
 		message: String
-		books: [Book]
+		book: Book
 	}
 
 	type GoogleBookConnection {

@@ -5,7 +5,7 @@ export const GOOGLE_BOOK_MODIFY_FAVORITE = gql`
 		googleBookModifyFavorite(id: $id, favorite: $favorite) {
 			success
 			message
-			books {
+			book {
 				id
 				favorite
 			}

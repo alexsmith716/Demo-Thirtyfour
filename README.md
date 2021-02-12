@@ -25,7 +25,6 @@
 
 ### TODO:
 
-* RESTfulExample: network error 'Adding to favorites'
 * RESTfulExample: re-visit 'RefetchQueryResults'
 
 * Deploy app to Heroku
