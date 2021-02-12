@@ -9,6 +9,7 @@ import { GOOGLE_BOOK_MODIFY_FAVORITE } from '../../graphql/mutations/mutations.j
 export const GoogleBookBook = ({ book }) => {
 
 	const [toggleDescriptionView, setToggleDescriptionView] = useState(false);
+	const [bookFavorite, setBookFavorite] = useState(false);
 
 	// Mutations only support a 'no-cache' fetchPolicy
 	const [googleBookModifyFavorite, { error: googleBookModifyFavoriteERROR, data: googleBookModifyFavoriteDATA }] = useMutation(
@@ -23,7 +24,9 @@ export const GoogleBookBook = ({ book }) => {
 	useEffect(() => {
 
 		if (googleBookModifyFavoriteDATA) {
-			// console.log('>>>>>>>>>>>>>>>>>>>>>>>> GoogleBookBook > useEffect() > googleBookModifyFavoriteDATA: ', googleBookModifyFavoriteDATA);
+			const { googleBookModifyFavorite: { book }} = googleBookModifyFavoriteDATA;
+			//	const bookFav = googleBookModifyFavoriteDATA?.googleBookModifyFavorite?.book?.favorite;
+			setBookFavorite(book.favorite)
 		}
 
 	},[googleBookModifyFavoriteDATA]);
@@ -47,7 +50,7 @@ export const GoogleBookBook = ({ book }) => {
 							<Button
 								className="btn-light btn-tiny"
 								onClick={() => googleBookModifyFavorite({ variables: { id: book.id, favorite: book.favorite && book.favorite ? false : true }, fetchPolicy: 'no-cache'})}
-								buttonText={`${book.favorite && book.favorite ? "Remove from" : "Add to"} Favorites`}
+								buttonText={`${bookFavorite && bookFavorite ? "Remove from" : "Add to"} Favorites`}
 							/>
 						</div>
 					</div>
@@ -66,7 +69,7 @@ export const GoogleBookBook = ({ book }) => {
 
 				<div><b>ID:&nbsp;</b>{book.id ? book.id : <i>n/a</i>}</div>
 
-				<div><b>Favorite:&nbsp;</b>{book.favorite && book.favorite ? <i>true</i> : <i>false</i>}</div>
+				<div><b>Favorite:&nbsp;</b>{bookFavorite && bookFavorite ? <i>true</i> : <i>false</i>}</div>
 
 				{book.description &&
 					<>

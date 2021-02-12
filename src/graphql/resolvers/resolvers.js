@@ -92,13 +92,18 @@ export const resolvers = {
 	// if mutation updates a single entity, AC automatically updates that value in cache when the mutation returns
 	Mutation: {
 		googleBookModifyFavorite: async (obj, { id, favorite }, { dataSources }) => {
+      console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > id: ', id);
+      console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > favorite: ', favorite);
 			try {
 				const book = await dataSources.googleBooks.getBook({ id });
+        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book: ', book);
+        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 favorite: ', favorite);
 				book.favorite = favorite;
+        console.log('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > 2222 book.favorite: ', book);
 				return {
 					success: true,
 					message: 'added to favorites',
-					books: [book],
+					book: book,
 				};
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > ERROR: ', error);
