@@ -1,7 +1,6 @@
 import { DataSource } from 'apollo-datasource';
 import fetch from 'isomorphic-fetch';
 
-// import graphqlClient from '../../apollo/graphqlClient';
 import { GET_RICK_AND_MORTY_CHARACTER, GET_RICK_AND_MORTY_CHARACTERS, GET_RICK_AND_MORTY_CHARACTERS_BY_IDS } from '../queries/queries.js';
 
 export class RickAndMortyAPI extends DataSource {
@@ -11,7 +10,6 @@ export class RickAndMortyAPI extends DataSource {
 	}
 
 	graphqlClient({ query, variables={}, method='POST' }) {
-    console.log('#################### RickAndMortyAPI/graphqlClient/characters ####################')
 		return fetch('https://rickandmortyapi.com/graphql', {
 			method: method,
 			headers: {
@@ -32,7 +30,7 @@ export class RickAndMortyAPI extends DataSource {
 			})
 			.catch(err => {
 				console.error('>>>> RickAndMortyAPI > ERROR:', err.message);
-				return null;
+				return false;
 			});
 	};
 
@@ -48,7 +46,6 @@ export class RickAndMortyAPI extends DataSource {
 	}
 
 	async getCharacters({page, filter}) {
-    console.log('#################### RickAndMortyAPI/characters ####################')
 		try {
 			const response = await this.graphqlClient({query: GET_RICK_AND_MORTY_CHARACTERS, variables: {page: page, filter: filter}});
 			const { data: { characters }} = response;

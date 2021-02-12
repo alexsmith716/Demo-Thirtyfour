@@ -22,7 +22,6 @@ export const GoogleBookBook = ({ book }) => {
 	};
 
 	useEffect(() => {
-
 		if (googleBookModifyFavoriteDATA) {
 			const { googleBookModifyFavorite: { book }} = googleBookModifyFavoriteDATA;
 			//	const bookFav = googleBookModifyFavoriteDATA?.googleBookModifyFavorite?.book?.favorite;

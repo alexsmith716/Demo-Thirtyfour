@@ -33,9 +33,9 @@ export class GoogleBooksAPI extends RESTDataSource {
 			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > route: ', route);
 			const response = await this.get(route);
 			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > response: ', response);
-			console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > response: ', JSON.stringify(response));
+			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > response: ', JSON.stringify(response));
 			const reducedResponse = Array.isArray(response.items) ? response.items.map(book => this.bookReducer(book)) : [];
-			console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > reducedResponse: ', reducedResponse);
+			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBooks > reducedResponse: ', reducedResponse);
 			return reducedResponse;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> googleBooksAPI > getBooks > response > ERROR: ', error);
@@ -47,9 +47,9 @@ export class GoogleBooksAPI extends RESTDataSource {
 		try {
 			const route = `volumes/${id}`;
 			const response = await this.get(route);
-			console.log('>>>>>>>>>>>>> googleBooksAPI > getBook > response: ', response);
+			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBook > response: ', response);
 			const reducedResponse = this.bookReducer(response);
-			console.log('>>>>>>>>>>>>> googleBooksAPI > getBook > reducedResponse: ', reducedResponse);
+			// console.log('>>>>>>>>>>>>> googleBooksAPI > getBook > reducedResponse: ', reducedResponse);
 			return reducedResponse;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> googleBooksAPI > getBook > response > ERROR: ', error);
