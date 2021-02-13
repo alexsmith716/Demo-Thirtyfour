@@ -11,9 +11,11 @@ export const GoogleBookBook = ({ book }) => {
 	const [toggleDescriptionView, setToggleDescriptionView] = useState(false);
 	const [bookFavorite, setBookFavorite] = useState(false);
 
-	// Mutations only support a 'no-cache' fetchPolicy
-	const [googleBookModifyFavorite, { error: googleBookModifyFavoriteERROR, data: googleBookModifyFavoriteDATA }] = useMutation(
-		GOOGLE_BOOK_MODIFY_FAVORITE,
+	const [googleBookModifyFavorite, {
+			error: googleBookModifyFavoriteERROR,
+			data: googleBookModifyFavoriteDATA,
+		}] = useMutation(
+			GOOGLE_BOOK_MODIFY_FAVORITE,
 	);
 
 	const upgradeThumbnailURL = (url) => {
@@ -22,13 +24,14 @@ export const GoogleBookBook = ({ book }) => {
 	};
 
 	useEffect(() => {
-		if (googleBookModifyFavoriteDATA) {
-			const { googleBookModifyFavorite: { book }} = googleBookModifyFavoriteDATA;
-			//	const bookFav = googleBookModifyFavoriteDATA?.googleBookModifyFavorite?.book?.favorite;
-			setBookFavorite(book.favorite)
-		}
-
-	},[googleBookModifyFavoriteDATA]);
+			if (googleBookModifyFavoriteDATA) {
+				const { googleBookModifyFavorite: { book }} = googleBookModifyFavoriteDATA;
+				//  const bookFav = googleBookModifyFavoriteDATA?.googleBookModifyFavorite?.book?.favorite;
+				setBookFavorite(book.favorite)
+			}
+		},
+		[googleBookModifyFavoriteDATA,]
+	);
 
 	return (
 		<div className="row-flex">
