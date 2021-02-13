@@ -14,29 +14,22 @@ import { GET_RICK_AND_MORTY_CHARACTERS, } from '../../graphql/queries/queries.js
 
 const GraphQLExample = () => {
 
-	//	const [errorMessage, setErrorMessage] = useState(null);
+	//  const [errorMessage, setErrorMessage] = useState(null);
 	const inputElement = useRef(null);
 	const [clientExtract, setClientExtract] = useState(null);
 	const [rickAndMortyCharactersInfo, setRickAndMortyCharactersInfo] = useState(false);
 	const [rickAndMortyCharactersFilterName, setRickAndMortyCharactersFilterName] = useState('');
 	const [rickAndMortyCharactersCurrentPage, setRickAndMortyCharactersCurrentPage] = useState(null);
 	const [rickAndMortyResults, setRickAndMortyResults] = useState(false);
+	const [toggleCacheView, setToggleCacheView] = useState(true);
 
 	const client = useApolloClient();
 
-	//	=====================================================================
+	//  =====================================================================
 
 	const variables = {
 		filter: { name: `${rickAndMortyCharactersFilterName}`},
 	};
-
-	//	1 = loading, 2 = setVariables, 3 = fetchMore, 4 = refetch, 6 = poll, 7 = ready, 8 = error
-	//	2 = setVariables ?????
-
-	//	the very first query will read from the cache and make a network request, 
-	//		but subsequent queries will make a network request only if the cache data has become incomplete
-
-	//	https://github.com/apollographql/apollo-client/issues/6907
 
 	const [getRickAndMortyCharacters, {
 			loading: rickAndMortyCharactersLoading, 
@@ -50,29 +43,15 @@ const GraphQLExample = () => {
 			{
 				fetchPolicy: 'cache-and-network',
 				nextFetchPolicy: 'cache-first',
-				//	variables,
+				//  variables,
 				notifyOnNetworkStatusChange: true,
 			}
 	);
 
-	//  const isSetVariables = netw
-	//  const characters = !isSetVariables ? rickAndMortyCharactersData?.characters : undefined;
-	//  const next = characters?.info?.next;
-	//  const hasNextPage = Boolean(next);
-	//  const results = characters?.results || [];
-
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > networkStatus: ', networkStatus);
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > isSetVariables: ', isSetVariables);
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > characters: ', characters);
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > next: ', next);
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > hasNextPage: ', hasNextPage);
-	//  console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > results: ', results);
-
-	//	=====================================================================
+	//  =====================================================================
 
 	useEffect(() => {
 			if (rickAndMortyCharactersData) {
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersData: ', rickAndMortyCharactersData);
 				const { characters: { info }} = rickAndMortyCharactersData;
 				const { characters: { results }} = rickAndMortyCharactersData;
 				if (info) {
@@ -84,18 +63,25 @@ const GraphQLExample = () => {
 					} else {
 						setRickAndMortyCharactersCurrentPage(info.pages);
 					}
-					console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersCurrentPage: ', rickAndMortyCharactersCurrentPage);
 				}
 				if (results.length > 0) {
 					setRickAndMortyResults(true);
 				}
-			}
-			if (rickAndMortyCharactersFilterName) {
-				console.log('>>>>>>>>>>>>>>>>>>>>>>>> GraphQLExample > rickAndMortyCharactersFilterName: ', rickAndMortyCharactersFilterName);
+				if (clientExtract) {
+					setToggleCacheView(true);
+				}
 			}
 		},
 		[rickAndMortyCharactersData, rickAndMortyCharactersFilterName,]
 	);
+
+	const viewCacheChangeHandler = e => {
+		if (clientExtract) {
+			setToggleCacheView(!toggleCacheView);
+		} else {
+			setClientExtract(client.extract())
+		}
+	};
 
 	return (
 		<>
@@ -146,11 +132,9 @@ const GraphQLExample = () => {
 						</div>
 
 						{clientExtract && (
-							<div>
+							<div className={!toggleCacheView ? 'text-overflow-ellipsis-one' : ''}>
 								<h5>ApolloClient Cache:</h5>
-								<div>----------------------------------</div>
 								<div>{JSON.stringify(clientExtract)}</div>
-								<div>----------------------------------</div>
 							</div>
 						)}
 					</div>
@@ -159,13 +143,10 @@ const GraphQLExample = () => {
 						<Button
 							type="button"
 							className="btn-success btn-md"
-							onClick={() => setClientExtract(client.extract())}
-							buttonText="View Apollo Cache"
+							onClick={viewCacheChangeHandler}
+							buttonText={!clientExtract ? "View Apollo Cache" : "Toggle Cache View"}
 						/>
 					</div>
-
-					{/* ======================================================================= */}
-					{/* ======================================================================= */}
 
 					<div className="mb-3">
 						<div className="row-flex">
@@ -194,12 +175,9 @@ const GraphQLExample = () => {
 							type="button"
 							className={`btn-success btn-md`}
 							onClick={() => getRickAndMortyCharacters({variables: {filter: {name: rickAndMortyCharactersFilterName }},})}
-							buttonText="Get Characters!!"
+							buttonText="Get Characters"
 						/>
 					</div>
-
-					{/* ======================================================================= */}
-					{/* ======================================================================= */}
 
 					<div className="mb-3">
 						<Button
@@ -228,7 +206,7 @@ const GraphQLExample = () => {
 						/>
 					</div>
 
-					{rickAndMortyCharactersData && (
+					{rickAndMortyCharactersData && rickAndMortyCharactersInfo && (
 						<div className="mb-3">
 							<Button
 								type="button"
