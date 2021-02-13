@@ -15,6 +15,7 @@ const RESTfulExample = () => {
 
 	const [clientExtract, setClientExtract] = useState(null);
 	const [googleBookSearch, setGoogleBookSearch] = useState('');
+	const [toggleCacheView, setToggleCacheView] = useState(false);
 
 	const client = useApolloClient();
 
@@ -56,9 +57,16 @@ const RESTfulExample = () => {
 			if (googleBookData) {
 				console.log('>>>>>>>>>>>>>>>>>>>>>>>> RESTfulExample > useEffect() > googleBookData: ', googleBookData);
 			}
+			if (toggleCacheView) {
+				setClientExtract(client.extract());
+			}
 		},
-		[googleBooksData, googleBookSearch, googleBookData]
+		[googleBooksData, googleBookSearch, googleBookData, toggleCacheView,]
 	);
+
+	const viewCacheChangeHandler = e => {
+		setToggleCacheView(!toggleCacheView);
+	};
 
 	return (
 		<>
@@ -130,12 +138,10 @@ const RESTfulExample = () => {
 							</div>
 						)}
 
-						{clientExtract !== null && (
-							<div>
+						{clientExtract && (
+							<div className={!toggleCacheView ? 'text-overflow-ellipsis-one' : ''}>
 								<h5>ApolloClient Cache:</h5>
-								<div>----------------------------------</div>
 								<div>{JSON.stringify(clientExtract)}</div>
-								<div>----------------------------------</div>
 							</div>
 						)}
 					</div>
@@ -144,8 +150,8 @@ const RESTfulExample = () => {
 						<Button
 							type="button"
 							className="btn-success btn-md"
-							onClick={() => setClientExtract(client.extract())}
-							buttonText="View Apollo Cache"
+							onClick={viewCacheChangeHandler}
+							buttonText={!clientExtract ? "View Apollo Cache" : "Toggle Cache View"}
 						/>
 					</div>
 

@@ -25,8 +25,6 @@
 
 ### TODO:
 
-* RESTfulExample: re-visit 'RefetchQueryResults'
-
 * Deploy app to Heroku
 * Re-start linting
 * Add/expand testing

@@ -21,7 +21,7 @@ const GraphQLExample = () => {
 	const [rickAndMortyCharactersFilterName, setRickAndMortyCharactersFilterName] = useState('');
 	const [rickAndMortyCharactersCurrentPage, setRickAndMortyCharactersCurrentPage] = useState(null);
 	const [rickAndMortyResults, setRickAndMortyResults] = useState(false);
-	const [toggleCacheView, setToggleCacheView] = useState(true);
+	const [toggleCacheView, setToggleCacheView] = useState(false);
 
 	const client = useApolloClient();
 
@@ -67,20 +67,16 @@ const GraphQLExample = () => {
 				if (results.length > 0) {
 					setRickAndMortyResults(true);
 				}
-				if (clientExtract) {
-					setToggleCacheView(true);
+				if (toggleCacheView) {
+					setClientExtract(client.extract());
 				}
 			}
 		},
-		[rickAndMortyCharactersData, rickAndMortyCharactersFilterName,]
+		[rickAndMortyCharactersData, rickAndMortyCharactersFilterName, toggleCacheView]
 	);
 
 	const viewCacheChangeHandler = e => {
-		if (clientExtract) {
-			setToggleCacheView(!toggleCacheView);
-		} else {
-			setClientExtract(client.extract())
-		}
+		setToggleCacheView(!toggleCacheView);
 	};
 
 	return (
