@@ -139,7 +139,7 @@ const GraphQLExample = () => {
 						<Button
 							type="button"
 							className="btn-success btn-md"
-							onClick={viewCacheChangeHandler}
+							onClick={() => setToggleCacheView(!toggleCacheView)}
 							buttonText={!clientExtract ? "View Apollo Cache" : "Toggle Cache View"}
 						/>
 					</div>
