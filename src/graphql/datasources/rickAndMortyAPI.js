@@ -30,7 +30,6 @@ export class RickAndMortyAPI extends DataSource {
 			})
 			.catch(err => {
 				console.error('>>>> RickAndMortyAPI > ERROR:', err.message);
-				return false;
 			});
 	};
 
@@ -41,7 +40,6 @@ export class RickAndMortyAPI extends DataSource {
 			return character;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> RickAndMortyAPI > Query > getCharacter > ERROR: ', error);
-			return false;
 		}
 	}
 
@@ -52,7 +50,6 @@ export class RickAndMortyAPI extends DataSource {
 			return characters;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> RickAndMortyAPI > Query > getCharacters > ERROR: ', error);
-			return false;
 		}
 	}
 
@@ -63,7 +60,6 @@ export class RickAndMortyAPI extends DataSource {
 			return charactersByIds;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> RickAndMortyAPI > Query > getCharacters > ERROR: ', error);
-			return false;
 		}
 	}
 };

@@ -47,7 +47,6 @@ export const resolvers = {
 				};
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Query > googleBooks > ERROR: ', error);
-				return false;
 			}
 		},
 
@@ -57,7 +56,6 @@ export const resolvers = {
 				return book;
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Query > googleBook > ERROR: ', error);
-				return false;
 			}
 		},
 
@@ -67,7 +65,6 @@ export const resolvers = {
 				return character;
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Query > character > ERROR: ', error);
-				return false;
 			}
 		},
 
@@ -78,7 +75,6 @@ export const resolvers = {
 				return characters;
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Query > characters > ERROR: ', error);
-				return false;
 			}
 		},
 
@@ -88,7 +84,6 @@ export const resolvers = {
 				return charactersByIds;
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Query > charactersByIds > ERROR: ', error);
-				return false;
 			}
 		},
 	},
@@ -112,7 +107,6 @@ export const resolvers = {
 				};
 			} catch (error) {
 				console.error('>>>>>>>>>>>>> RESOLVERS > Mutation > googleBookModifyFavorite > ERROR: ', error);
-				return false;
 			}
 		},
 	},
