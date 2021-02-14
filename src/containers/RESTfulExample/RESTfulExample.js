@@ -84,6 +84,10 @@ const RESTfulExample = () => {
 				<div className="bg-color-ivory container-padding-border-radius-1 text-break mb-5">
 					<div className="mb-3">
 
+						<div className="mb-3">
+							<h5>getGoogleBooks Data:</h5>
+						</div>
+
 						{networkStatus === NetworkStatus.refetch && (
 							<p>
 								Refetching...
@@ -116,9 +120,6 @@ const RESTfulExample = () => {
 
 						{googleBooksData && (
 							<div>
-								<div className="mb-3">
-									<h5>getGoogleBooks Data:</h5>
-								</div>
 								{googleBooksData.googleBooks.books.map((book, index) => (
 									<div key={index} className="mb-3 container-padding-border-radius-2">
 										<GoogleBookBook book={ book } />

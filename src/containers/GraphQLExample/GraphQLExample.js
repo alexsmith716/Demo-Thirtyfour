@@ -95,6 +95,10 @@ const GraphQLExample = () => {
 				<div className="bg-color-ivory container-padding-border-radius-1 text-break mb-5">
 					<div className="mb-3">
 
+            <div className="mb-3">
+              <h5>rickAndMortyCharactersData Data:</h5>
+            </div>
+
 						<div className="mb-3">
 							{networkStatus === NetworkStatus.refetch && (
 								<b><Loading text="Refetching" /></b>
@@ -110,9 +114,6 @@ const GraphQLExample = () => {
 						</div>
 
 						<div>
-							<div className="mb-3">
-								<h5>rickAndMortyCharactersData Data:</h5>
-							</div>
 							{rickAndMortyCharactersData && rickAndMortyResults && (
 								<div>
 									{rickAndMortyCharactersData.characters.results.map((character, index) => (
@@ -123,7 +124,7 @@ const GraphQLExample = () => {
 								</div>
 							)}
 							{rickAndMortyCharactersData && !rickAndMortyResults && (
-								<div>No Data Found!</div>
+								<div><p>Query Error: No data.</p></div>
 							)}
 						</div>
 
