@@ -39,6 +39,7 @@ export class GoogleBooksAPI extends RESTDataSource {
 			return reducedResponse;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> googleBooksAPI > getBooks > response > ERROR: ', error);
+			return false;
 		}
 	}
 
@@ -52,6 +53,7 @@ export class GoogleBooksAPI extends RESTDataSource {
 			return reducedResponse;
 		} catch (error) {
 			console.error('>>>>>>>>>>>>> googleBooksAPI > getBook > response > ERROR: ', error);
+			return false;
 		}
 	}
 };
