@@ -95,9 +95,9 @@ const GraphQLExample = () => {
 				<div className="bg-color-ivory container-padding-border-radius-1 text-break mb-5">
 					<div className="mb-3">
 
-            <div className="mb-3">
-              <h5>rickAndMortyCharactersData Data:</h5>
-            </div>
+						<div className="mb-3">
+							<h5>rickAndMortyCharactersData Data:</h5>
+						</div>
 
 						<div className="mb-3">
 							{networkStatus === NetworkStatus.refetch && (
