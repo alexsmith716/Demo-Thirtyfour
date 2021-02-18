@@ -9,7 +9,7 @@
 		"build": "concurrently \"yarn build:webpack\" \"yarn build:lib\"",
 		"build:webpack": "NODE_ENV=development webpack",
 		"build:lib": "NODE_ENV=development BABEL_ENV=node babel -d lib src --extensions '.ts,.tsx,.js,.jsx,'",
-		"prod": "NODE_ENV=development node ./lib/server/index.js",
+		"start": "NODE_ENV=development node ./lib/server/index.js",
 		"clean": "rimraf public lib",
 		"test": "jest src",
 		"check-types-t": "tsc --traceResolution",
